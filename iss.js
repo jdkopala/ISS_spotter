@@ -15,4 +15,22 @@ const fetchMyIP = (callback) => {
   });
 };
 
-module.exports = { fetchMyIP };
+const fetchCoordsByIP = (ip, callback) => {
+  request('https://api.ipbase.com/json/?apikey=ktQ8XzwXPzJ6jEK48lkOAsGmQ4ajTKh6iN84zK2s', (error, response, body) => {
+    console.log("Error: ", error);
+    if (error) {
+    callback(error, null);
+    return;
+    }
+  
+    if (response.statusCode !== 200) {
+      callback(Error(`Status Code ${response.statusCode} when fetching Coordinates: ${body}`, null))
+      return;
+    }
+    const { latitude, longitude } = JSON.parse(body);
+
+    callback(null, { latitude, longitude });
+  })
+}
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
