@@ -1,21 +1,49 @@
-const { fetchMyIP, fetchCoordsByIP } = require('./iss')
+const { nextISSTimesForMyLocation } = require('./iss');
 
-let ip = fetchMyIP((error, ip) => {
-  if (error) {
-    console.log("It broke!", error)
-    return;
+// const ip = fetchMyIP((error, ip) => {
+//   if (error) {
+//     console.log("It broke!", error);
+//     return;
+//   }
+//   // You win, IP address retrieved
+//   console.log("It worked! Returned IP: ", ip);
+//   return ip;
+// });
+
+// const coords = fetchCoordsByIP(ip, (error, data) => {
+//   if (error) {
+//     console.log("The geolocator broke! ", error);
+//     return;
+//   }
+//   // You win, coordinates retrieved
+//   console.log("It worked! Returned Coordinates: ", data);
+//   return data;
+// });
+
+// const exampleCoords = { latitude: 51, longitude:-113 }
+
+// fetchISSFlyoverTimes(exampleCoords, (error, data) => {
+//   if (error) {
+//     console.log("THE ISS PART BROKE: ", error);
+//     return;
+//   }
+//   console.log("ISS flyover times: ", data);
+//   return data;
+// });
+
+const printFlyoverTimes = function(flyoverTimes) {
+  for (const t of flyoverTimes) {
+    const time = new Date(0);
+    time.setUTCDate(t.risetime);
+    const duration = t.duration;
+    console.log(`Next pass at ${time} for ${duration} seconds!`);
   }
-  console.log("It worked! Returned IP: ", ip);
-  return ip;
-});
+};
 
-
-
-let coords = fetchCoordsByIP(ip, (error, data) => {
+nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
-    console.log("The geolocator broke! ", error);
-    return;
+    return console.log("It didn't work!", error);
   }
-  console.log("It worked, Returned Coordinates: ", data);
-  return data;
+  // If you make it here, it worked and we get the flyover times, wooooo!
+  printFlyoverTimes(passTimes);
 });
