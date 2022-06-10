@@ -43,7 +43,7 @@ const fetchISSFlyoverTimes = function(coords, callback) {
     }
     
     if (response.statusCode !== 200) {
-      callback(Error(`Status Code ${response.statusCode} when fetching Coordinates: ${body}`, null));
+      callback(Error(`Status Code ${response.statusCode} when fetching the flyover times: ${body}`, null));
       return;
     }
 
