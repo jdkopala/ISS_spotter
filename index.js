@@ -34,7 +34,7 @@ const { nextISSTimesForMyLocation } = require('./iss');
 const printFlyoverTimes = function(flyoverTimes) {
   for (const t of flyoverTimes) {
     const time = new Date(0);
-    time.setUTCDate(t.risetime);
+    time.setUTCSeconds(t.risetime);
     const duration = t.duration;
     console.log(`Next pass at ${time} for ${duration} seconds!`);
   }
