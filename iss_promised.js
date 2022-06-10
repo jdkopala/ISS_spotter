@@ -6,7 +6,7 @@ const fetchMyIP = () => {
 
 const fetchCoordsByIP = function(body) {
   let ip = JSON.parse(body).ip;
-  return request(`https://freegeoip.app/json/${ip}`)
+  return request(`https://api.ipbase.com/json/?apikey=ktQ8XzwXPzJ6jEK48lkOAsGmQ4ajTKh6iN84zK2s`)
 };
 
 const fetchISSFlyoverTimes = function(body) {
@@ -17,7 +17,7 @@ const fetchISSFlyoverTimes = function(body) {
 };
 
 const nextISSTimesForMyLocation = function() {
-  fetchMyIP()
+  return fetchMyIP()
     .then(fetchCoordsByIP)
     .then(fetchISSFlyoverTimes)
     .then((data) => {
@@ -25,4 +25,14 @@ const nextISSTimesForMyLocation = function() {
       return response;
   });
 }
-module.exports = { nextISSTimesForMyLocation };
+
+const printFlyoverTimes = function(flyoverTimes) {
+  for (const t of flyoverTimes) {
+    const time = new Date(0);
+    time.setUTCSeconds(t.risetime);
+    const duration = t.duration;
+    console.log(`Next pass at ${time} for ${duration} seconds!`);
+  }
+};
+
+module.exports = { nextISSTimesForMyLocation, printFlyoverTimes };

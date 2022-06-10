@@ -1,4 +1,4 @@
-const { nextISSTimesForMyLocation } = require('./iss');
+const { nextISSTimesForMyLocation, printFlyoverTimes } = require('./iss');
 
 // const ip = fetchMyIP((error, ip) => {
 //   if (error) {
@@ -31,14 +31,6 @@ const { nextISSTimesForMyLocation } = require('./iss');
 //   return data;
 // });
 
-const printFlyoverTimes = function(flyoverTimes) {
-  for (const t of flyoverTimes) {
-    const time = new Date(0);
-    time.setUTCSeconds(t.risetime);
-    const duration = t.duration;
-    console.log(`Next pass at ${time} for ${duration} seconds!`);
-  }
-};
 
 nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {

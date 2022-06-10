@@ -1,4 +1,10 @@
-const { nextISSTimesForMyLocation } = require('./iss_promised');
+const { nextISSTimesForMyLocation, printFlyoverTimes } = require('./iss_promised');
 
 
-nextISSTimesForMyLocation();
+nextISSTimesForMyLocation()
+  .then((flyoverTimes) => {
+    printFlyoverTimes(flyoverTimes);
+  })
+  .catch((error) => {
+    console.log("It didn't work: ", error.message);
+  });
